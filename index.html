@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>遠隔カウンター</title>
+</head>
+
+<body style="text-align:center; font-family:sans-serif;">
+
+<h2>遠隔カウンター</h2>
+
+<button onclick="countUp()" style="font-size:20px; padding:10px;">
+  完了✨
+</button>
+
+<h3 id="count">回数：0</h3>
+
+<script>
+
+let count = 0;
+
+// ★ここにGASのURL入れる
+const GAS_URL = "https://script.google.com/macros/s/AKfycbz8m9xbZnn8c2UtvSaNMNn8_ABqyufsuaxCzyfJuLbCJHRyTOhQiXpVn05Kinm1z-PumA/exec";
+
+function countUp(){
+
+  count++;
+  document.getElementById("count").innerText = "回数：" + count;
+
+  fetch(GAS_URL, {
+    method: "POST",
+    body: JSON.stringify({ count: count }),
+    headers: { "Content-Type": "application/json" }
+  });
+
+}
+</script>
+
+</body>
+</html>
