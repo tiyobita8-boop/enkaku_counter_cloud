@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<title>遠隔カウンター</title>
+<title>遠隔カウンター（完全同期版）</title>
 </head>
 
 <body style="text-align:center; font-family:sans-serif;">
@@ -10,10 +10,10 @@
 <h2>遠隔カウンター</h2>
 
 <button onclick="countUp()" style="font-size:20px; padding:10px;">
-  お金の大看板５段とった✨
+  完了✨
 </button>
 
-<h3 id="count">回数：0</h3>
+<h3 id="count">回数：読み込み中...</h3>
 
 <script>
 
@@ -21,12 +21,29 @@ let count = 0;
 
 const GAS_URL = "https://script.google.com/macros/s/AKfycbwRln8Zb8guKWdVGuWQYLlUIDY3qSzIDB_RgwLVUHx86n-3atbd04rQlBRNL2JWoj-uPw/exec";
 
+// 🔥ページ開いた時に最新取得
+window.onload = function(){
+
+  fetch(GAS_URL)
+    .then(res => res.text())
+    .then(data => {
+      count = Number(data) || 0;
+      document.getElementById("count").innerText = "回数：" + count;
+    })
+    .catch(err => {
+      console.error(err);
+      document.getElementById("count").innerText = "取得失敗";
+    });
+
+}
+
+// 🔥ボタン押した時
 function countUp(){
 
   count++;
+
   document.getElementById("count").innerText = "回数：" + count;
 
-  // ★ここが正解位置
   fetch(GAS_URL, {
     method: "POST",
     mode: "no-cors",
