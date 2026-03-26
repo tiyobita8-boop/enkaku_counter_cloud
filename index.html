@@ -19,7 +19,6 @@
 
 let count = 0;
 
-// ★ここにGASのURL入れる
 const GAS_URL = "https://script.google.com/macros/s/AKfycbwRln8Zb8guKWdVGuWQYLlUIDY3qSzIDB_RgwLVUHx86n-3atbd04rQlBRNL2JWoj-uPw/exec";
 
 function countUp(){
@@ -27,21 +26,16 @@ function countUp(){
   count++;
   document.getElementById("count").innerText = "回数：" + count;
 
+  // ★ここが正解位置
   fetch(GAS_URL, {
     method: "POST",
-    body: JSON.stringify({ count: count }),
-    headers: { "Content-Type": "application/json" }
+    mode: "no-cors",
+    body: JSON.stringify({ count: count })
   });
 
 }
+
 </script>
-fetch(GAS_URL, {
-  method: "POST",
-  mode: "no-cors",   // ★これ追加
-  body: JSON.stringify({ count: count }),
-  headers: {
-    "Content-Type": "application/json"
-  }
-});
+
 </body>
 </html>
